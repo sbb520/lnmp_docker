@@ -1,0 +1,36 @@
+version: "2"
+services:
+  nginx:
+      build: nginx
+     # privileged: true
+      ports:
+        - "80:80"
+        - "81:81"
+        - "443:443"
+      links:
+        - "php-fpm"
+      volumes:
+            - /data/wwwroot/:/data/wwwroot/
+            - /data/wwwlogs/:/data/wwwlogs/
+            - /data/wwwroot/docker/nginx/vhost/:/etc/nginx/vhost/
+            - /data/wwwroot/docker/nginx/ssl/:/etc/nginx/ssl/
+            - /data/wwwroot/docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+  php-fpm:
+      build: php-fpm
+     # privileged: true
+      ports:
+        - "9000:9000"
+        - "8282:8282"
+      volumes:
+            - /data/wwwroot/:/data/wwwroot/
+            - /data/wwwlogs/:/data/wwwlogs/
+            - /data/wwwroot/docker/php-fpm/php.ini:/usr/local/etc/php/php.ini
+            - /data/wwwroot/docker/php-fpm/php-fpm.conf:/usr/local/etc/php-fpm.conf
+  mysql:
+      image: "mysql:5.7"
+      ports:
+        - "3306:3306"
+      volumes:
+         - /var/lib/mysql/:/var/lib/mysql/
+      environment:
+          MYSQL_ROOT_PASSWORD: mysqlpasswd
