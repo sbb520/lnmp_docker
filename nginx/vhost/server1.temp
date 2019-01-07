@@ -1,9 +1,17 @@
 server {
+    listen  80; 
+    server_name http://server;
+
+    rewrite ^(.*)$  https://server$1 permanent;
+}
+
+
+server {
     listen 443;
     server_name https://server;
     root /data/wwwroot/server1;
     access_log /data/wwwlogs/access.log combined;
-	error_log /data/wwwlogs/brandusa.log;
+	error_log /data/wwwlogs/error.log;
     add_header X-Frame-Options "SAMEORIGIN";
     add_header X-XSS-Protection "1; mode=block";
     add_header X-Content-Type-Options "nosniff";
