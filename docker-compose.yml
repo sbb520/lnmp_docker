@@ -2,6 +2,8 @@ version: "2"
 services:
   nginx:
       build: nginx
+      networks:
+        - lnmp
      # privileged: true
       ports:
         - "80:80"
@@ -17,6 +19,8 @@ services:
             - /data/wwwroot/docker/nginx/nginx.conf:/etc/nginx/nginx.conf
   php-fpm:
       build: php-fpm
+      networks:
+        - lnmp
      # privileged: true
       ports:
         - "9000:9000"
@@ -28,9 +32,14 @@ services:
             - /data/wwwroot/docker/php-fpm/php-fpm.conf:/usr/local/etc/php-fpm.conf
   mysql:
       image: "mysql:5.7"
+      networks:
+        - lnmp
       ports:
         - "3306:3306"
       volumes:
          - /var/lib/mysql/:/var/lib/mysql/
+         - /data/wwwroot/docker/mysql/:/etc/mysql/
       environment:
           MYSQL_ROOT_PASSWORD: mysqlpasswd
+networks:
+  lnmp:
