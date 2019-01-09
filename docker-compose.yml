@@ -41,5 +41,11 @@ services:
          - /data/wwwroot/docker/mysql/:/etc/mysql/
       environment:
           MYSQL_ROOT_PASSWORD: mysqlpasswd
+  redis:
+      image: "redis"
+      networks:
+        - lnmp
+      ports:
+        - "6379:6379"
 networks:
   lnmp:

@@ -15,6 +15,11 @@ RUN apt-get install -y \
 
 RUN docker-php-ext-install zip  mbstring  pdo_mysql opcache
 
+#新增redis拓展
+RUN pecl install -o -f redis \
+    &&  rm -rf /tmp/pear \
+    &&  docker-php-ext-enable redis
+
 #新增bcmath拓展
 RUN docker-php-source extract \
     && cd /usr/src/php/ext/bcmath \
