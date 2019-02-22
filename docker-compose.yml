@@ -13,6 +13,7 @@ services:
         - "php-fpm"
       volumes:
             - /data/wwwroot/:/data/wwwroot/
+            - /etc/localtime/:/etc/localtime/
             - /data/wwwlogs/:/data/wwwlogs/
             - /data/wwwroot/docker/nginx/vhost/:/etc/nginx/vhost/
             - /data/wwwroot/docker/nginx/ssl/:/etc/nginx/ssl/
@@ -27,6 +28,7 @@ services:
         - "8282:8282"
       volumes:
             - /data/wwwroot/:/data/wwwroot/
+            - /etc/localtime/:/etc/localtime/
             - /data/wwwlogs/:/data/wwwlogs/
             - /data/wwwroot/docker/php-fpm/php.ini:/usr/local/etc/php/php.ini
             - /data/wwwroot/docker/php-fpm/php-fpm.conf:/usr/local/etc/php-fpm.conf
@@ -38,6 +40,7 @@ services:
         - "3306:3306"
       volumes:
          - /var/lib/mysql/:/var/lib/mysql/
+         - /etc/localtime/:/etc/localtime/
          - /data/wwwroot/docker/mysql/:/etc/mysql/
       environment:
           MYSQL_ROOT_PASSWORD: mysqlpasswd
@@ -45,6 +48,8 @@ services:
       image: "redis"
       networks:
         - lnmp
+      volumes:
+        - /etc/localtime/:/etc/localtime/
       ports:
         - "6379:6379"
 networks:
